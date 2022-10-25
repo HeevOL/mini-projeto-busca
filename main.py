@@ -38,21 +38,41 @@ def teste_desempenho():
     else:
         print(busca_binaria(lista, search))
 
+
+def teste_desempenho_sequencial():
+    lista_teste = list(range(tamanho))
+    print(busca_sequencial_ordenada(lista_teste, search))
+
+
+def teste_desempenho_binario():
+    lista_teste = list(range(tamanho))
+    print(busca_binaria(lista_teste, search))
+
+
 op = None
 while op != 'n':
-    data = input("Digite o valor inicial, tamanho e incremento: ").split()
-    init = int(data[0])
-    length = int(data[1])
-    increment = int(data[2])
-
     lista = []
-    for i in range(length):
-        lista.append(init+(increment*i))
 
-    search = int(input("Digite o valor q deseja procurar na lista: "))
+    if op == 'a':
+        tamanho = int(input("digite o tamanho da lista: "))
+        search = int(input("Digite o valor a ser procurado: "))
+        tempo = timeit.timeit(stmt=teste_desempenho_sequencial, number=1)
+        print("desempenho sequencial: ", tempo)
+        tempo = timeit.timeit(stmt=teste_desempenho_binario, number=1)
+        print("desempenho binario: ", tempo)
 
-    tempo = timeit.timeit(stmt=teste_desempenho, number= 1)
+    else: 
+        data = input("Digite o valor inicial, tamanho e incremento: ").split()
+        init = int(data[0])
+        length = int(data[1])
+        increment = int(data[2])
 
-    print(tempo)
+        for i in range(length):
+            lista.append(init+(increment*i))
 
+        search = int(input("Digite o valor q deseja procurar na lista: "))
+        tempo = timeit.timeit(stmt=teste_desempenho, number= 1)
+    
+    print("Tempo de execução: ", tempo)
+    tempo = timeit._Timer = 0
     op = input("continuar? 's' ou 'n': ")
