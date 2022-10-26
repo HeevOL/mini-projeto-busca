@@ -57,14 +57,15 @@ try:
     qntd_testes = int(input("Digite quantas vezes deseja fazer o teste: "))
     lista = list(range(tamanho))
 
+    print()
     tempo_seq = timeit.timeit(stmt=teste_desempenho_sequencial, number=qntd_testes)
-    print(f"Desempenho sequencial: {tempo_seq}, tempo médio de testes: {tempo_seq/qntd_testes}")
+    print(f"Desempenho sequencial: {tempo_seq}, tempo médio de testes: {tempo_seq/qntd_testes}\n")
 
     tempo_bin = timeit.timeit(stmt=teste_desempenho_binario, number=qntd_testes)
-    print(f"Desempenho binario: {tempo_bin}, tempo médio de testes: {tempo_bin/qntd_testes}")
+    print(f"Desempenho binario: {tempo_bin}, tempo médio de testes: {tempo_bin/qntd_testes}\n")
 
     tempo_oti = timeit.timeit(stmt=teste_desempenho_otimizado, number=qntd_testes)
-    print(f"Desempenho otimizado: {tempo_oti}, tempo médio de testes: {tempo_oti/qntd_testes}")
+    print(f"Desempenho otimizado: {tempo_oti}, tempo médio de testes: {tempo_oti/qntd_testes}\n")
 
 except:
     print("Os valores de tamanho e quantidade de teste devem ser inteiros positivos.")
