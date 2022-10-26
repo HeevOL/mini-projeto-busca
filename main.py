@@ -1,6 +1,5 @@
 import timeit
 import random
-from math import ceil
 
 def busca_sequencial_ordenada(uma_lista, item_pesquisado):
     pos = 0
