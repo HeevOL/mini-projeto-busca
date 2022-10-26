@@ -1,5 +1,6 @@
 import timeit
 import random
+from math import ceil
 
 def busca_sequencial_ordenada(uma_lista, item_pesquisado):
     pos = 0
@@ -49,7 +50,7 @@ def teste_desempenho_binario():
 
 
 def valor_aleatorio():
-    return random.randint(0, tamanho*1.25)
+    return random.randint(0, tamanho*2)
     
 
 try:
