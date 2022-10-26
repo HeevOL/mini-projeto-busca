@@ -1,4 +1,5 @@
 import timeit
+import random
 
 def busca_sequencial_ordenada(uma_lista, item_pesquisado):
     pos = 0
@@ -32,47 +33,38 @@ def busca_binaria(uma_lista, item_pesquisado):
     return encontrou
 
 
-def teste_desempenho():
-    if length < 128:
-        print(busca_sequencial_ordenada(lista, search))
+def teste_desempenho_otimizado():
+    if len(lista) < 128:
+        busca_sequencial_ordenada(lista, valor_aleatorio())
     else:
-        print(busca_binaria(lista, search))
+        busca_binaria(lista, valor_aleatorio())
 
 
 def teste_desempenho_sequencial():
-    lista_teste = list(range(tamanho))
-    print(busca_sequencial_ordenada(lista_teste, search))
+    busca_sequencial_ordenada(lista, valor_aleatorio())
 
 
 def teste_desempenho_binario():
-    lista_teste = list(range(tamanho))
-    print(busca_binaria(lista_teste, search))
+    busca_binaria(lista, valor_aleatorio())
 
 
-op = None
-while op != 'n':
-    lista = []
-
-    if op == 'a':
-        tamanho = int(input("digite o tamanho da lista: "))
-        search = int(input("Digite o valor a ser procurado: "))
-        tempo = timeit.timeit(stmt=teste_desempenho_sequencial, number=1)
-        print("desempenho sequencial: ", tempo)
-        tempo = timeit.timeit(stmt=teste_desempenho_binario, number=1)
-        print("desempenho binario: ", tempo)
-
-    else: 
-        data = input("Digite o valor inicial, tamanho e incremento: ").split()
-        init = int(data[0])
-        length = int(data[1])
-        increment = int(data[2])
-
-        for i in range(length):
-            lista.append(init+(increment*i))
-
-        search = int(input("Digite o valor q deseja procurar na lista: "))
-        tempo = timeit.timeit(stmt=teste_desempenho, number= 1)
+def valor_aleatorio():
+    return random.randint(0, tamanho*1.25)
     
-    print("Tempo de execução: ", tempo)
-    tempo = timeit._Timer = 0
-    op = input("continuar? 's' ou 'n': ")
+
+try:
+    tamanho = int(input("Digite o tamanho da lista: "))
+    qntd_testes = int(input("Digite quantas vezes deseja fazer o teste: "))
+    lista = list(range(tamanho))
+
+    tempo_seq = timeit.timeit(stmt=teste_desempenho_sequencial, number=qntd_testes)
+    print(f"Desempenho sequencial: {tempo_seq}, tempo médio de testes: {tempo_seq/qntd_testes}")
+
+    tempo_bin = timeit.timeit(stmt=teste_desempenho_binario, number=qntd_testes)
+    print(f"Desempenho binario: {tempo_bin}, tempo médio de testes: {tempo_bin/qntd_testes}")
+
+    tempo_oti = timeit.timeit(stmt=teste_desempenho_otimizado, number=qntd_testes)
+    print(f"Desempenho otimizado: {tempo_oti}, tempo médio de testes: {tempo_oti/qntd_testes}")
+
+except:
+    print("Os valores de tamanho e quantidade de teste devem ser inteiros positivos.")
