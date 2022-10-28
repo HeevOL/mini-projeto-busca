@@ -14,7 +14,7 @@ def busca_sequencial_ordenada(uma_lista, item_pesquisado):
     return encontrou
 
 
-def busca_binaria(uma_lista, item_pesquisado, hibrida=0):
+def busca_binaria(uma_lista, item_pesquisado, hibrida=-1):
     inicio = 0
     fim = len(uma_lista)-1
     encontrou = False
