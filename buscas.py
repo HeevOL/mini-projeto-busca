@@ -14,7 +14,7 @@ def busca_sequencial_ordenada(uma_lista, item_pesquisado):
     return encontrou
 
 
-def busca_binaria(uma_lista, item_pesquisado):
+def busca_binaria(uma_lista, item_pesquisado, hibrida=0):
     inicio = 0
     fim = len(uma_lista)-1
     encontrou = False
@@ -22,6 +22,8 @@ def busca_binaria(uma_lista, item_pesquisado):
         meio = (inicio + fim)//2
         if uma_lista[meio] == item_pesquisado:
             encontrou = True
+        elif fim-inicio <= hibrida:
+            return uma_lista[inicio:fim]
         else:
             if item_pesquisado < uma_lista[meio]:
                 fim = meio-1

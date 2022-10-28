@@ -1,29 +1,37 @@
 import timeit
 import random
-
+from math import floor
 from buscas import *
 
 def printar():
-    print("-------------------------")
+    print("-------------------------------------------------")
 
-def teste_desempenho_otimizado():
-    if len(lista) < 128:
-        busca_sequencial_ordenada(lista, valor_aleatorio())
-    else:
-        busca_binaria(lista, valor_aleatorio())
+
+def teste_desempenho_hibrido():
+    for valor in valores:
+        if len(lista) <= 128:
+            busca_sequencial_ordenada(lista, valor)
+        else:
+            lista_fatiada = busca_binaria(lista, valor, hibrida=128)
+            if isinstance(lista_fatiada, list):
+                busca_sequencial_ordenada(lista_fatiada, valor) 
 
 
 def teste_desempenho_sequencial():
-    busca_sequencial_ordenada(lista, valor_aleatorio())
+    for valor in valores:
+        busca_sequencial_ordenada(lista, valor)
 
 
 def teste_desempenho_binario():
-    busca_binaria(lista, valor_aleatorio())
+    for valor in valores:
+        busca_binaria(lista, valor)
 
 
-def valor_aleatorio():
-    return random.randint(0, tamanho*2)
-    
+def valores_aleatorios():
+    valores = []
+    for i in range(qntd_testes):
+        valores.append(random.randint(0, floor(tamanho*1.25)))
+    return valores
 
 
 try:
@@ -33,16 +41,17 @@ try:
     qntd_testes = int(input("Digite quantas vezes deseja fazer o teste: "))
     printar()
     lista = list(range(tamanho))
+    valores = valores_aleatorios()
 
     print()
-    tempo_seq = timeit.timeit(stmt=teste_desempenho_sequencial, number=qntd_testes)
-    print(f"Desempenho sequencial: {tempo_seq}, tempo médio de testes: {tempo_seq/qntd_testes}\n")
+    tempo_seq = timeit.timeit(stmt=teste_desempenho_sequencial, number=1)
+    print(f"Desempenho sequencial: {tempo_seq:.6f} segundos, tempo médio: {(tempo_seq/qntd_testes):.6f} segundos.\n")
 
-    tempo_bin = timeit.timeit(stmt=teste_desempenho_binario, number=qntd_testes)
-    print(f"Desempenho binario: {tempo_bin}, tempo médio de testes: {tempo_bin/qntd_testes}\n")
+    tempo_bin = timeit.timeit(stmt=teste_desempenho_binario, number=1)
+    print(f"Desempenho binário: {tempo_bin:.6f} segundos, tempo médio: {(tempo_bin/qntd_testes):.6f} segundos.\n")
 
-    tempo_oti = timeit.timeit(stmt=teste_desempenho_otimizado, number=qntd_testes)
-    print(f"Desempenho otimizado: {tempo_oti}, tempo médio de testes: {tempo_oti/qntd_testes}\n")
+    tempo_hib = timeit.timeit(stmt=teste_desempenho_hibrido, number=1)
+    print(f"Desempenho híbrido: {tempo_hib:.6f} segundos, tempo médio: {(tempo_hib/qntd_testes):.6f} segundos.\n")
 
 except:
     print("Os valores de tamanho e quantidade de teste devem ser inteiros positivos.")
